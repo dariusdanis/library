@@ -5,8 +5,7 @@ import org.springframework.dao.DataIntegrityViolationException
 class BookController {
 
 	def list = {
-		def books = Book.findAllWhere(user: null)
-		[books : books]
+		[books : Book.findAllWhere(user: null), action : "Take"]
 	}
 
 	def add = {
@@ -15,17 +14,23 @@ class BookController {
 
 	def take() {
 		def selectedBooks = Book.getAll(params.list('checkedBooks'))
-		for (result in selectedBooks) {
-			result.user = session.user
-			result.save()
+		if (selectedBooks) {
+			for (result in selectedBooks) {
+				result.user = session.user
+				result.save()
+			}
+			flash.message = "Books taked successfully"
+			redirect(controller: "user", action: "mybooks")
+		} else {
+			flash.message = "First select books!"
+			redirect(action: "list")
 		}
-		redirect(uri:'/')
 	}
 
 	def listall() {
-		[books : Book.getAll()]
+		render(view: "list", model : [books : Book.findAll(), action : "Owner"]);
 	}
-	
+
 	def save() {
 		def book = new Book(
 				ISBN: params.ISBN,
@@ -36,7 +41,7 @@ class BookController {
 		if (!book.validate()) {
 			def listOfErrors = new ArrayList();
 			book.errors.allErrors.each {
-				listOfErrors.add(message(code: 'default.bad.'+ it.getArguments()[0] + '.message'));
+				listOfErrors.add(message(code: 'default.'+ it.getCode() +'.'+ it.getArguments()[0] + '.message'));
 			}
 			flash.message = listOfErrors
 			render(view:"add", model : [book : book, authors : Author.findAll()])
@@ -77,7 +82,7 @@ class BookController {
 		}
 		if (version != null) {
 			if (book.version > version) {
-				listOfErrors.add(message(code: 'default.book.optimistic.locking.failure'))
+				listOfErrors.add(message(code: 'default.'+ it.getCode() +'.'+ it.getArguments()[0] + '.message'));
 				flash.message=listOfErrors
 				render(view: "edit", model: [book: book, authors: Author.findAll()])
 				return
@@ -113,5 +118,4 @@ class BookController {
 			redirect(action: "show", id: id)
 		}
 	}
-
 }

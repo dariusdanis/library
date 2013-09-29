@@ -16,14 +16,16 @@ class User {
 	String role = "user"
 
 	static constraints = {
-		email(blank: false, nullable: false, unique: true, email: true, size: 1..100)
-		name(blank:false, size: 1..100)
-		surname(blank:false, size: 1..100)
-		dateOfBirth(blank: false)
-		password(blank: false, nullable: false, size: 1..100)
-		personalNo validator: { obj ->
-			return (obj.isNumber()) && (obj.toString().length() == 11)
-		}
+		email(blank: false, nullable: false, unique: true, email: true, size: 1..50)
+		name(blank:false, size: 1..50)
+		surname(blank:false, size: 1..50)
+		dateOfBirth (validator: {
+			return it?.before(new Date())
+		})
+		password(blank: false, nullable: false, size: 5..50)
+		personalNo (unique: true,  validator: {
+			return (it.isNumber()) && (it.length() == 11)
+		})
 	}
 	
 	static mapping = {
@@ -42,5 +44,10 @@ class User {
 			}
 		}
 		return false;
+	}
+	
+	@Override
+	public int hashCode() {
+		return id;
 	}
 }

@@ -76,7 +76,7 @@ Ext.onReady(function() {
 		dataIndex : 'id',
 	}, {
 		header : "Email",
-		width : 150,
+		width : 202,
 		dataIndex : 'email',
 	}, {
 		header : "Name",
@@ -115,7 +115,7 @@ Ext.onReady(function() {
 			type : 'string',
 			dataIndex : 'surname'
 		}, {
-			type : 'numeric',
+			type : 'string',
 			dataIndex : 'personalNo'
 		} ]
 	});
@@ -142,8 +142,8 @@ Ext.onReady(function() {
 		border: false,
 		frame : true,
 		title : 'Users',
-		height : 200,
-		width : 616,
+		height : 215,
+		width : 670,
 		loadMask: true,
 		store : userInfo,
 		cm : cm,

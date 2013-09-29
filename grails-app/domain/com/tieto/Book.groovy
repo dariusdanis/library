@@ -9,18 +9,20 @@ class Book {
 	Date yearOfRelease
 	String name
 	String ISBN
-	
-    static constraints = {
+
+	static constraints = {
 		user(nullable: true)
-    	yearOfRelease(blank: false, nullable: false)
-		name(blank: false, nullable: false, size : 1..100)
-		ISBN(blank: false, nullable: false, matches: "ISBN(-1(?:(0)|3))?:?\\x20(\\s)*[0-9]+[- ][0-9]+[- ][0-9]+[- ][0-9]*[- ]*[xX0-9]") 
+		yearOfRelease(validator: {
+			return it?.before(new Date())
+		})
+		name(blank: false, nullable: false, size : 1..50)
+		ISBN(blank: false, nullable: false, matches: "^((97(8|9))-)?\\d{10}", unique: true)
 	}
-	
+
 	String toString(){
 		name
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof Book) {
@@ -31,4 +33,8 @@ class Book {
 		return false;
 	}
 	
+	@Override
+	public int hashCode() {
+		return id;
+	}
 }

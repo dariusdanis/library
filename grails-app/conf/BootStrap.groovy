@@ -30,7 +30,7 @@ class BootStrap {
 				email: "jonas@gmail.com",
 				name: "Jonas",
 				password: "jonas",
-				personalNo: "12345678912",
+				personalNo: "12345678911",
 				surname: "Jonas"
 				)
 		user.save()
@@ -51,13 +51,13 @@ class BootStrap {
 				email: "admin@admin.com",
 				name: "Admin",
 				password: "admin",
-				personalNo: "12345678912",
+				personalNo: "12345678913",
 				surname: "Admin"
 				)
 		user3.save()
 
 		def book = new Book(
-				ISBN: "ISBN-13 978-3-642-11746-6",
+				ISBN: "978-1933988931",
 				name: "Food : from farm to fork statistics",
 				yearOfRelease: new Date(),
 				user: user2
@@ -68,7 +68,7 @@ class BootStrap {
 		book.save()
 
 		def book2 = new Book(
-				ISBN: "ISBN-13 978-3-642-11746-6",
+				ISBN: "978-1933988920",
 				name: "Annual report 2012",
 				yearOfRelease: new Date(),
 				user: user3
@@ -78,7 +78,7 @@ class BootStrap {
 		book2.save()
 
 		def book3 = new Book(
-				ISBN: "ISBN-13 978-3-642-11746-6",
+				ISBN: "978-1933988921",
 				name: "The European Union and the BRIC countries",
 				yearOfRelease: new Date(),
 				user: user
@@ -89,9 +89,9 @@ class BootStrap {
 		book3.save()
 
 		def book4 = new Book(
-				ISBN: "ISBN-13 978-3-642-11746-6",
+				ISBN: "978-1933988922",
 				name: "The international role of the euro",
-				yearOfRelease: new Date().calendarDate,
+				yearOfRelease: new Date(),
 				user: user
 				)
 		book4.authors = new ArrayList<Author>()
@@ -100,16 +100,17 @@ class BootStrap {
 		book4.save()
 
 		def book5 = new Book(
-				ISBN: "ISBN-13 978-3-642-11746-6",
+				ISBN: "978-1933988923",
 				name: "Risk assessment of the European banking system",
-				yearOfRelease: new Date()
+				yearOfRelease: new Date(),
+				user: user3
 				)
 		book5.authors = new ArrayList<Author>()
 		book5.authors.add(author)
 		book5.save()
 
 		def book6 = new Book(
-				ISBN: "ISBN-13 978-3-642-11746-6",
+				ISBN: "978-1933988924",
 				name: "Investing in social Europe",
 				yearOfRelease: new Date()
 				)
@@ -119,7 +120,7 @@ class BootStrap {
 		book6.save()
 
 		def book7 = new Book(
-				ISBN: "ISBN-13 978-3-642-11746-6",
+				ISBN: "978-1933988925",
 				name: "Social economy and social entrepreneurship",
 				yearOfRelease: new Date()
 				)
@@ -128,7 +129,7 @@ class BootStrap {
 		book7.save()
 
 		def book8 = new Book(
-				ISBN: "ISBN-13 978-3-642-11746-6",
+				ISBN: "978-1933988926",
 				name: "Cohesion policy after 2013",
 				yearOfRelease: new Date()
 				)

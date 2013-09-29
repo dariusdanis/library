@@ -10,8 +10,8 @@ class Author {
 	String surname
 	
 	static constraints = {
-		name(blank: false, nullable: false, size: 1..100)
-		surname(blank: false, nullable: false, size: 1..100)
+		name(blank: false, nullable: false, size: 1..50)
+		surname(blank: false, nullable: false, size: 1..50)
 	}
 	
 	@Override
@@ -29,4 +29,8 @@ class Author {
 		return false;
 	}
 	
+	@Override
+	public int hashCode() {
+		return id;
+	}
 }

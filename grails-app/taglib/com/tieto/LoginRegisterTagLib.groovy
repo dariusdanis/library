@@ -11,5 +11,5 @@ class LoginRegisterTagLib {
 			out << """${link(action:"login", controller:"user"){"Login"}}"""
 		}
 	}
-	
+		
 }

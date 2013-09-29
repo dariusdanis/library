@@ -28,51 +28,52 @@
 .bsmSelect {
 	position: absolute;
 	width: 222px;
-	left: 339px;
+    left: 256px;
 	top: 103px;
 }
 </style>
 </head>
 <body>
-	<div class="content scaffold-create" role="main">
-		<h1>New author</h1>
-		<g:if test="${flash.message}">
-			<g:each in="${flash.message}">
-				<div class="message">
-					${it}
-				</div>
-			</g:each>
-			${flash.clear()}
-		</g:if>
-		<g:form action="save" method="post">
-			<fieldset class="form">
-				<div class="fieldcontain">
-					<label> Name: </label> <input type="text" id="name" name="name"
-						value="${author?.name}" />
-				</div>
+	<div class="content">
+		<div class="info">
+			<h1>New author</h1>
+			<g:if test="${flash.message}">
+				<g:each in="${flash.message}">
+					<div class="message">
+						${it}
+					</div>
+				</g:each>
+				${flash.clear()}
+			</g:if>
+			<g:form action="save" method="post">
+				<fieldset class="form">
+					<div class="fieldcontain">
+						<label> Name: </label> <input type="text" id="name" name="name"
+							value="${author?.name}" />
+					</div>
 
-				<div class="fieldcontain">
-					<label> Surname: </label> <input type="text" id="surname"
-						name="surname" value="${author?.surname }" />
-				</div>
+					<div class="fieldcontain">
+						<label> Surname: </label> <input type="text" id="surname"
+							name="surname" value="${author?.surname }" />
+					</div>
 
-				<div class="fieldcontain">
-					<label> Authors: </label> <select id="books"
-						multiple="multiple" title="Click to Select Book"
-						name="checkedBooks">
-						<g:each in="${books}">
-							<option value="${it.id}">
-								${it}
-							</option>
-						</g:each>
-					</select>
-				</div>
-			</fieldset>
-			<fieldset class="buttons">
-				<input type="submit" value="Add" />
-			</fieldset>
+					<div class="fieldcontain">
+						<label> Authors: </label> <select id="books" multiple="multiple"
+							title="Click to Select Book" name="checkedBooks">
+							<g:each in="${books}">
+								<option value="${it.id}">
+									${it}
+								</option>
+							</g:each>
+						</select>
+					</div>
+				</fieldset>
+				<fieldset class="buttons">
+					<input type="submit" value="Add" />
+				</fieldset>
 
-		</g:form>
+			</g:form>
+		</div>
 	</div>
 </body>
 </html>

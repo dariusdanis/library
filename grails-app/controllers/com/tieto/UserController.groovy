@@ -25,7 +25,7 @@ class UserController {
 		if (!user.validate()) {
 			def listOfErrors = new ArrayList();
 			user.errors.allErrors.each {
-				listOfErrors.add(message(code: 'default.bad.'+ it.getArguments()[0] + '.message'));
+				listOfErrors.add(message(code: 'default.'+ it.getCode() +'.'+ it.getArguments()[0] + '.message'));
 			}
 			flash.message = listOfErrors
 			render(view:"register", model : [user : user])
@@ -73,6 +73,11 @@ class UserController {
 
 	def show(Long id) {
 		def user = User.get(id)
+		if (!user) {
+			flash.message = "User dosn't exist!"
+			redirect(action: "list")
+			return
+		}
 		[user: user]
 	}
 
@@ -109,7 +114,7 @@ class UserController {
 
 		if (!user.save(flush: true)) {
 			user.errors.allErrors.each {
-				listOfErrors.add(message(code: 'default.bad.'+ it.getArguments()[0] + '.message'));
+				listOfErrors.add(message(code: 'default.'+ it.getCode() +'.'+ it.getArguments()[0] + '.message'));
 			}
 			flash.message = listOfErrors
 			render(view: "edit", model: [user: user, availableBooks : Book.findAllWhere(user : null), userBooks : Book.findAllWhere(user : user)])
@@ -145,7 +150,7 @@ class UserController {
 	}
 
 	def userJson = {
-		def user = User.getAll()
+		def user = User.findAll("from User as u where u.books.size > 1")
 		JSON.registerObjectMarshaller(User) {
 			def array = [:]
 			array['id'] = it.id

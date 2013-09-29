@@ -17,7 +17,7 @@ class AuthorController {
 		def author = new Author(params)
 		if (!author.validate()) {
 			author.errors.allErrors.each {
-				listOfErrors.add(message(code: 'default.bad.'+ it.getArguments()[0] + '.message'));
+				listOfErrors.add(message(code: 'default.'+ it.getCode() +'.'+ it.getArguments()[0] + '.message'));
 			}
 			flash.message = listOfErrors
 			render(view:"add", model : [author : author, books : Book.findAll()])

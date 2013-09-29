@@ -10,19 +10,19 @@ h1,h2,h3,h4,h5,h6 {
 
 /* BASE LAYOUT */
 html {
-    background-color: #ddd;
-    background-image: -moz-linear-gradient(center top, #aaa, #ddd);
-    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #aaa),
-        color-stop(1, #ddd));
-    background-image: linear-gradient(top, #aaa, #ddd);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorStr=   '#aaaaaa',
-        EndColorStr=   '#dddddd');
-    background-repeat: no-repeat;
-    height: 100%;
-    /* change the box model to exclude the padding from the calculation of 100% height (IE8+) */
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
+	background-color: #ddd;
+	background-image: -moz-linear-gradient(center top, #aaa, #ddd);
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #aaa),
+		color-stop(1, #ddd));
+	background-image: linear-gradient(top, #aaa, #ddd);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr=     '#aaaaaa',
+		EndColorStr=     '#dddddd');
+	background-repeat: no-repeat;
+	height: 100%;
+	/* change the box model to exclude the padding from the calculation of 100% height (IE8+) */
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 html.no-cssgradients {
@@ -38,15 +38,16 @@ html * {
 }
 
 body {
-    background: #ffffff;
-    color: #333333;
-    margin: 0 auto;
-    max-width: 960px;
-    overflow-x: hidden;
-    /* prevents box-shadow causing a horizontal scrollbar in firefox when viewport < 960px wide */
-    -moz-box-shadow: 0 0 0.3em #255b17;
-    -webkit-box-shadow: 0 0 0.3em #255b17;
-    box-shadow: 0 0 0.3em #255b17;
+	background: #ffffff;
+	color: #333333;
+	margin: 0 auto;
+	max-width: 960px;
+	overflow-x: hidden;
+	/* prevents box-shadow causing a horizontal scrollbar in firefox when viewport < 960px wide */
+	-moz-box-shadow: 0 0 0.3em #255b17;
+	-webkit-box-shadow: 0 0 0.3em #255b17;
+	box-shadow: 0 0 0.3em #255b17;
+	min-height: 390px;
 }
 
 #grailsLogo {
@@ -94,32 +95,8 @@ img {
 	margin: 1em;
 }
 
-.content {
-	
-}
-
-.content h1 {
-	border-bottom: 1px solid #CCCCCC;
-	margin: 0.8em 1em 0.3em;
-	padding: 0 0.25em;
-}
-
 .scaffold-list h1 {
 	border: none;
-}
-
-.footer {
-	background: #abbf78;
-	color: #000;
-	clear: both;
-	font-size: 0.8em;
-	margin-top: 1.5em;
-	padding: 1em;
-	min-height: 1em;
-}
-
-.footer a {
-	color: #255b17;
 }
 
 .spinner {
@@ -410,44 +387,44 @@ input:invalid:focus,select:invalid:focus,textarea:invalid:focus {
 
 /* TABLES */
 table[class="table"] {
-    border-top: 1px solid #DFDFDF;
-    border-collapse: collapse;
-    width: 100%;
-    margin-bottom: 1em;
+	border-top: 1px solid #DFDFDF;
+	border-collapse: collapse;
+	width: 100%;
+	margin-bottom: 1em;
 }
 
 table[class="table"]>tr {
-    border: 0;
+	border: 0;
 }
 
 table[class="table"]>tr>td:first-child,tr>th:first-child {
-    padding-left: 1.25em;
+	padding-left: 1.25em;
 }
 
 table[class="table"]>tr>td:last-child,tr>th:last-child {
-    padding-right: 1.25em;
+	padding-right: 1.25em;
 }
 
 td,th {
-    line-height: 1.5em;
-    padding: 0.5em 0.6em;
-    text-align: left;
-    vertical-align: top;
+	line-height: 1.5em;
+	padding: 0.5em 0.6em;
+	text-align: left;
+	vertical-align: top;
 }
 
 th {
-    background-color: #efefef;
-    background-image: -moz-linear-gradient(top, #ffffff, #eaeaea);
-    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #ffffff),
-        color-stop(1, #eaeaea));
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorStr=   '#ffffff',
-        EndColorStr=   '#eaeaea');
-    -ms-filter:
-        "progid:DXImageTransform.Microsoft.gradient(startColorStr='#ffffff', EndColorStr='#eaeaea')";
-    color: #666666;
-    font-weight: bold;
-    line-height: 1.7em;
-    padding: 0.2em 0.6em;
+	background-color: #efefef;
+	background-image: -moz-linear-gradient(top, #ffffff, #eaeaea);
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #ffffff),
+		color-stop(1, #eaeaea));
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr=     '#ffffff',
+		EndColorStr=     '#eaeaea');
+	-ms-filter:
+		"progid:DXImageTransform.Microsoft.gradient(startColorStr='#ffffff', EndColorStr='#eaeaea')";
+	color: #666666;
+	font-weight: bold;
+	line-height: 1.7em;
+	padding: 0.2em 0.6em;
 }
 
 thead th {
@@ -489,7 +466,8 @@ th.desc a {
 	background: #ffffff;
 }
 
-table[class="table"]>thead>tr>th:hover,table[class="table"]>thead>tr>tr:hover {
+table[class="table"]>thead>tr>th:hover,table[class="table"]>thead>tr>tr:hover
+	{
 	background: #E1F2B6;
 }
 
@@ -623,15 +601,6 @@ a.header-main:link,a.header-main:visited {
 	font-weight: bold;
 }
 
-#footer {
-	font-size: 0.75em;
-	font-style: italic;
-	padding: 2em 1em 2em 1em;
-	margin-bottom: 1em;
-	margin-top: 1em;
-	clear: both;
-}
-
 #loginHeader {
 	float: right;
 	color: #fff;
@@ -643,12 +612,14 @@ a.header-main:link,a.header-main:visited {
 }
 
 #navMain ul {
+	list-style-type: disc !important;
 	padding: 0;
 	margin: 0;
 	margin-left: 33px;
 }
 
 #navMain {
+	position: absolute;
 	color: #c3c3c3;
 	font-family: Tahoma, Geneva, sans-serif;
 	background: #eff3f0;
@@ -660,6 +631,7 @@ a.header-main:link,a.header-main:visited {
 #navMain h2 {
 	font-family: Trebuchet MS1, Helvetica, sans-serif;
 	margin-top: 0;
+	font-size: 1.5em !important;
 }
 
 .btn {
@@ -681,7 +653,7 @@ a.header-main:link,a.header-main:visited {
 
 .bsmListSortableCustom li {
 	width: 222px;
-	left: 310px;
+	left: 227px;
 	border-radius: 5px;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
@@ -690,20 +662,48 @@ a.header-main:link,a.header-main:visited {
 }
 
 .fieldcontain .info {
-    display: table;
-    margin-left: 35.5%;
-    color: green;
-    text-decoration: underline;
+	display: table;
+	margin-left: 35.5%;
+	color: green;
+	text-decoration: underline;
 }
 
 table[class="table"]>tbody>tr>td>a {
-    display:block;
-    height:100%;
-    width:100%;
-    color: #333333 !important;
-    text-decoration: none;
+	display: block;
+	height: 100%;
+	width: 100%;
 }
 
 #grid {
-	 margin-left: 20%;
+	margin-left: 3.5%;
+}
+
+.content {
+	margin-left: 25%;
+	padding-bottom: 15px;
+}
+
+.info {
+	
+}
+
+.info h1 {
+	border-bottom: 1px solid #CCCCCC;
+	margin: 0.8em 1em 0.3em;
+	padding: 0 0.25em;
+}
+
+#footer_container {
+	position: relative;
+}
+
+#footer {
+	position: absolute;
+	bottom: -100px;
+	font-size: 0.75em;
+	font-style: italic;
+	padding: 2em 1em 2em 1em;
+	margin-bottom: 1em;
+	margin-top: 1em;
+	clear: both;
 }

@@ -6,33 +6,40 @@
 <title>Login</title>
 </head>
 <body>
-	<g:form action="giveBack" method="post">
-		<table class="table">
-			<thead>
-				<tr>
-					<th>Title</th>
-					<th>Release year</th>
-					<th>Give back</th>
-				</tr>
-			</thead>
-			<tbody>
-				<g:each in="${books}">
+	<div class="content">
+		<g:if test="${flash.message}">
+			<div class="message">
+				${flash.message}
+			</div>
+		</g:if>
+		<g:form action="giveBack" method="post">
+			<table class="table">
+				<thead>
 					<tr>
-						<td><g:link action="show" id="${it.id }" controller="book">
-								${it.name }
-							</g:link></td>
-						<td><g:link action="show" id="${it.id }" controller="book">
-								${it.yearOfRelease.format('yyyy-MM-dd') }
-							</g:link></td>
-						<td><g:checkBox name="checkedBooks" value="${it.id }"
-								checked="false" /></td>
+						<th>Title</th>
+						<th>Release year</th>
+						<th>Give back</th>
 					</tr>
-				</g:each>
-			</tbody>
-		</table>
-		<fieldset class="buttons">
-			<input type="submit" value="Give back books!" />
-		</fieldset>
-	</g:form>
+				</thead>
+				<tbody>
+					<g:each in="${books}">
+						<tr>
+							<td><g:link action="show" id="${it.id }" controller="book">
+									${it.name }
+								</g:link></td>
+							<td>
+								${it.yearOfRelease.format('yyyy-MM-dd') }
+							</td>
+							<td><g:checkBox name="checkedBooks" value="${it.id }"
+									checked="false" /></td>
+						</tr>
+					</g:each>
+				</tbody>
+			</table>
+			<fieldset class="buttons">
+				<input type="submit" value="Give back books!" />
+			</fieldset>
+		</g:form>
+	</div>
 </body>
 </html>

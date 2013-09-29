@@ -5,6 +5,7 @@
 <title>Library</title>
 </head>
 <body>
+<div class="content">
 	<div class="nav" role="navigation">
 		<ul>
 			<li><g:link action="list">
@@ -12,6 +13,7 @@
                 </g:link></li>
 		</ul>
 	</div>
+	
 	<g:if test="${flash.message}">
 		<div class="message">
 			${
@@ -19,7 +21,8 @@
 			}
 		</div>
 	</g:if>
-	<div class="content scaffold-create" role="main">
+	
+	<div class="info">
 		<h1>Book</h1>
 		<fieldset class="form">
 			<div class="fieldcontain">
@@ -59,5 +62,6 @@
 			</fieldset>
 		</g:form>
 	</g:if>
+	</div>
 </body>
 </html>

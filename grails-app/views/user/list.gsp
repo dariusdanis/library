@@ -25,12 +25,14 @@
 <g:javascript src="grid.js"></g:javascript>
 </head>
 <body>
-	<g:if test="${flash.message}">
-		<div class="message">
-			${flash.message}
-		</div>
-	</g:if>
+	<div class="content">
+		<g:if test="${flash.message}">
+			<div class="message">
+				${flash.message}
+			</div>
+		</g:if>
 
-	<div id="grid"></div>
+		<div id="grid"></div>
+	</div>
 </body>
 </html>

@@ -21,20 +21,6 @@
 	list-style: none;
 }
 
-.bsmListItem {
-	/* li item from the html list above */
-	position: relative;
-	margin-left: 0;
-	padding-left: 0;
-	list-style: none;
-	background: #ddd;
-	border: 1px solid #bbb;
-	width: auto;
-	margin: 0 0 -1px 0;
-	line-height: 1em;
-	padding-top: 10px;
-}
-
 .bsmListItem:hover {
 	background-color: #e5e5e5;
 }
@@ -49,14 +35,24 @@
 	cursor: move;
 }
 
+.bsmListItem {
+    position: relative;
+    margin-left: 0;
+    padding-left: 0;
+    list-style: none;
+    background: #ddd;
+    border: 1px solid #bbb;
+    width: auto;
+    margin: 0 0 -1px 0;
+    line-height: 1em;
+    padding-top: 10px;
+}
+
 .bsmListItemRemove {
-	/* the remove link in each list item */
-	position: absolute;
-	right: 0;
-	top: 0;
-	padding: 0px;
-
-
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 0px;
 }
 
 .bsmScrollWorkaround {
