@@ -62,18 +62,8 @@
 
 			<g:form action="update" method="post">
 				<fieldset class="form">
-					<div class="fieldcontain ${hasErrors(bean: book, field: 'name', 'error')}">
-						<label> Name: </label>
-						<g:textField id="name" name="name" required=""
-							value="${author?.name}" />
-					</div>
-
-					<div class="fieldcontain ${hasErrors(bean: book, field: 'surname', 'error')}">
-						<label> Surname: </label>
-						<g:textField id="surname" name="surname" required=""
-							value="${author?.surname }" />
-					</div>
 					<div class="fieldcontain">
+						<g:render template="form" />
 						<label> Books: </label> <select id="books" multiple="multiple"
 							title="Click to Select Book" name="checkedBooks">
 							<g:each in="${books}">
