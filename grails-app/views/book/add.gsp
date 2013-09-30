@@ -43,23 +43,37 @@
 			</g:each>
 			${flash.clear()}
 		</g:if>
-
+		<g:hasErrors bean="${book}">
+			<ul class="errors" role="alert">
+				<g:eachError bean="${book}" var="error">
+					<li
+						<g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message
+							error="${error}" /></li>
+				</g:eachError>
+			</ul>
+		</g:hasErrors>
 		<div class="info">
 			<h1>New book</h1>
 			<form action="save" method="post">
 				<fieldset>
-					<div class="fieldcontain">
-						<label> Name: </label> <input type="text" id="name" name="name"
+					<div
+						class="fieldcontain ${hasErrors(bean: book, field: 'name', 'error')}">
+						<label> Name: </label>
+						<g:textField required="" id="name" name="name"
 							value="${book?.name }" />
 					</div>
-					<div class="fieldcontain">
-						<label> ISBN: </label> <input type="text" name="ISBN" id="ISBN"
+					<div
+						class="fieldcontain ${hasErrors(bean: book, field: 'ISBN', 'error')}">
+						<label> ISBN: </label>
+						<g:textField required="" name="ISBN" id="ISBN"
 							value="${book?.ISBN }" />
 					</div>
-					<div class="fieldcontain">
+					<div
+						class="fieldcontain ${hasErrors(bean: book, field: 'yearOfRelease', 'error')}">
 						<label> Release date: </label>
-						<g:datePicker class="test" name="date" years="${1930..2013}"
-							precision="day" value="${book?.yearOfRelease }" />
+						<g:datePicker class="test" id="yearOfRelease" name="yearOfRelease"
+							years="${1930..2013}" precision="day"
+							value="${book?.yearOfRelease }" />
 					</div>
 
 					<div class="fieldcontain">

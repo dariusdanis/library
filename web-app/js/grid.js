@@ -22,7 +22,7 @@ Ext.onReady(function() {
 	var userInfo = new Ext.data.JsonStore({
 		autoLoad : true,
 		autoDestroy : true,
-		url : 'http://localhost:8080/library/user/userJson',
+		url : window.location.origin + '/library/user/userJson',
 		idProperty : 'id',
 		root : 'items',
 		fields : [ {
@@ -154,7 +154,7 @@ Ext.onReady(function() {
 				rowselect : {
 					fn : function(sm, index, record) {
 						bookInfo.proxy.setApi(Ext.data.Api.actions.read,
-								'http://localhost:8080/library/user/bookJson/'
+								 window.location.origin + '/library/user/bookJson/'
 										+ record.data.id);
 						bookInfo.load();
 						win.show(this);

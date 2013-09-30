@@ -28,14 +28,14 @@
 .bsmSelect {
 	position: absolute;
 	width: 222px;
-    left: 256px;
+	left: 256px;
 	top: 148px;
 }
 </style>
 </head>
 <body>
 	<div class="content">
-		<div class="nav" role="navigation">
+		<div class="nav">
 			<ul>
 				<li><g:link action="list">
                     Back to list!
@@ -50,21 +50,32 @@
 			</g:each>
 			${flash.clear()}
 		</g:if>
-		<div class="info" role="main">
+		<g:hasErrors bean="${book}">
+			<ul class="errors" role="alert">
+				<g:eachError bean="${book}" var="error">
+					<li
+						<g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message
+							error="${error}" /></li>
+				</g:eachError>
+			</ul>
+		</g:hasErrors>
+		<div class="info">
 			<h1>New book</h1>
 			<g:form action="update" method="post">
 				<fieldset>
-					<div class="fieldcontain">
-						<label> Name: </label> <input type="text" id="name" name="name"
+					<div class="fieldcontain ${hasErrors(bean: book, field: 'name', 'error')}">
+						<label> Name: </label>
+						<g:textField required="" id="name" name="name"
 							value="${book.name}" />
 					</div>
-					<div class="fieldcontain">
-						<label> ISBN: </label> <input type="text" name="ISBN" id="ISBN"
+					<div class="fieldcontain ${hasErrors(bean: book, field: 'ISBN', 'error')}">
+						<label> ISBN: </label>
+						<g:textField required="" name="ISBN" id="ISBN"
 							value="${book.ISBN }" />
 					</div>
-					<div class="fieldcontain">
+					<div class="fieldcontain ${hasErrors(bean: book, field: 'yearOfRelease', 'error')}">
 						<label> Release date: </label>
-						<g:datePicker class="test" name="date"
+						<g:datePicker class="test" name="yearOfRelease" years="${1930..2013}"
 							value="${book.yearOfRelease}" precision="day" />
 					</div>
 

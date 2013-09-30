@@ -13,21 +13,16 @@ class AuthorController {
 	}
 
 	def save() {
-		def listOfErrors = new ArrayList();
 		def author = new Author(params)
-		if (!author.validate()) {
-			author.errors.allErrors.each {
-				listOfErrors.add(message(code: 'default.'+ it.getCode() +'.'+ it.getArguments()[0] + '.message'));
-			}
-			flash.message = listOfErrors
-			render(view:"add", model : [author : author, books : Book.findAll()])
-		} else {
-			Book.getAll(params.list('checkedBooks')).each {
-				it.authors.add(author)
-			}
-			author.save(flush: true)
-			redirect(action: "show", id: author.id);
+		Book.getAll(params.list('checkedBooks')).each {
+			it.authors.add(author)
 		}
+		if (!author.save(flush: true)) {
+			render(view:"add", model : [author : author, books : Book.findAll()])
+			return;
+		}
+		flash.message="Author added successfully"
+		redirect(action: "show", id: author.id);
 	}
 
 	def show(Long id) {
@@ -60,8 +55,7 @@ class AuthorController {
 		}
 		if (version != null) {
 			if (author.version > version) {
-				listOfErrors.add(message(code: 'default.author.optimistic.locking.failure'))
-				flash.message=listOfErrors
+				flash.message=message(code: 'default.author.optimistic.locking.failure')
 				render(view: "edit", model: [author: author])
 				return
 			}
@@ -74,10 +68,6 @@ class AuthorController {
 			it.authors.add(author)
 		}
 		if (!author.save(flush: true)) {
-			author.errors.allErrors.each {
-				listOfErrors.add(message(code: 'default.bad.'+ it.getArguments()[0] + '.message'));
-			}
-			flash.message = listOfErrors
 			render(view: "edit", model: [author: author])
 			return
 		}

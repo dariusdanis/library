@@ -1,10 +1,13 @@
 package com.tieto
 
 
+import java.lang.ClassLoader.ParallelLoaders;
+
 import grails.converters.JSON;
 
 import org.json.simple.JSONArray;
 import org.springframework.dao.DataIntegrityViolationException
+import org.apache.commons.validator.EmailValidator
 
 class UserController {
 
@@ -15,39 +18,32 @@ class UserController {
 	def list = {}
 
 	def registerAndLogIn() {
-		def user = new User(dateOfBirth: params.dateOfBirth,
-		email: params.email,
-		name: params.name,
-		password: params.password,
-		personalNo: params.personalNo,
-		surname: params.surname)
-
-		if (!user.validate()) {
-			def listOfErrors = new ArrayList();
-			user.errors.allErrors.each {
-				listOfErrors.add(message(code: 'default.'+ it.getCode() +'.'+ it.getArguments()[0] + '.message'));
-			}
-			flash.message = listOfErrors
-			render(view:"register", model : [user : user])
-		} else {
-			user.save(flush: true)
-			session.user = user
-			flash.message = "Hello ${user.name}!"
-			redirect(uri:'/')
+		def user = new User(params)
+		if (!user.save(flush: true)) {
+			render(view: "register", model: [user: user]);
+			return;
 		}
+		session.user = user
+		flash.message = "Hello ${user.name}!"
+		redirect(uri:'/')
 	}
 
 	def authenticate() {
-		def user = User.findByEmailAndPassword(
-				params.email, params.password)
-		if(user){
-			session.user = user
-			flash.message = "Hello ${user.name}!"
-			redirect(uri:'/')
-		} else{
-			flash.message = "Sorry, ${params.email}. Please try again."
-			render(view:"login", model : [email : params.email])
+		def userInfo = new User(params)
+		if (EmailValidator.getInstance().isValid(userInfo.email)) {
+			def user = User.findByEmailAndPassword(params.email, params.password)
+			if(user){
+				session.user = user
+				flash.message = "Hello ${user.name}!"
+				redirect(uri:'/')
+			} else {
+				flash.message = "The password/username you entered is incorrect!"
+				render(view:"login", model : [user: userInfo])
+			}
+			return;
 		}
+		userInfo.errors.rejectValue("email", "default.invalid.email.message")
+		render(view:"login", model : [user: userInfo])
 	}
 
 	def logout() {
@@ -92,7 +88,6 @@ class UserController {
 	}
 
 	def update(Long id, Long version){
-		def listOfErrors = new ArrayList();
 		def user = User.get(id)
 		if (!user) {
 			flash.message = "User dosn't exist!"
@@ -101,8 +96,7 @@ class UserController {
 		}
 		if (version != null) {
 			if (user.version > version) {
-				listOfErrors.add(message(code: 'default.user.optimistic.locking.failure'))
-				flash.message=listOfErrors
+				flash.message = message(code: 'default.user.optimistic.locking.failure')
 				render(view: "edit", model: [user: user, availableBooks : Book.findAllWhere(user : null), userBooks : Book.findAllWhere(user : user)])
 				return
 			}
@@ -113,10 +107,6 @@ class UserController {
 		Book.getAll(params.list('checkedBooks')).each { it.user = user }
 
 		if (!user.save(flush: true)) {
-			user.errors.allErrors.each {
-				listOfErrors.add(message(code: 'default.'+ it.getCode() +'.'+ it.getArguments()[0] + '.message'));
-			}
-			flash.message = listOfErrors
 			render(view: "edit", model: [user: user, availableBooks : Book.findAllWhere(user : null), userBooks : Book.findAllWhere(user : user)])
 			return
 		}

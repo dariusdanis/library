@@ -19,7 +19,7 @@ class BookController {
 				result.user = session.user
 				result.save()
 			}
-			flash.message = "Books taked successfully"
+			flash.message = "Books taken successfully"
 			redirect(controller: "user", action: "mybooks")
 		} else {
 			flash.message = "First select books!"
@@ -32,24 +32,14 @@ class BookController {
 	}
 
 	def save() {
-		def book = new Book(
-				ISBN: params.ISBN,
-				name: params.name,
-				yearOfRelease: params.date
-				)
-
-		if (!book.validate()) {
-			def listOfErrors = new ArrayList();
-			book.errors.allErrors.each {
-				listOfErrors.add(message(code: 'default.'+ it.getCode() +'.'+ it.getArguments()[0] + '.message'));
-			}
-			flash.message = listOfErrors
+		def book = new Book(params)
+		book.authors = Author.getAll(params.list('checkedAuthors'))
+		if (!book.save(flush: true)) {
 			render(view:"add", model : [book : book, authors : Author.findAll()])
-		} else {
-			book.authors = Author.getAll(params.list('checkedAuthors'))
-			book.save()
-			redirect(action: "show", id: book.id);
+			return;
 		}
+		flash.message="Book added successfully"
+		redirect(action: "show", id: book.id);
 	}
 
 	def show(Long id) {
@@ -73,7 +63,6 @@ class BookController {
 	}
 
 	def update(Long id, Long version) {
-		def listOfErrors = new ArrayList();
 		def book = Book.get(id)
 		if (!book) {
 			flash.message = "Book dosn't exist!"
@@ -82,8 +71,7 @@ class BookController {
 		}
 		if (version != null) {
 			if (book.version > version) {
-				listOfErrors.add(message(code: 'default.'+ it.getCode() +'.'+ it.getArguments()[0] + '.message'));
-				flash.message=listOfErrors
+				flash.message=message(code: 'default.book.optimistic.locking.failure')
 				render(view: "edit", model: [book: book, authors: Author.findAll()])
 				return
 			}
@@ -91,10 +79,6 @@ class BookController {
 		book.properties = params
 		book.authors = Author.getAll(params.list('checkedAuthors'))
 		if (!book.save(flush: true)) {
-			book.errors.allErrors.each {
-				listOfErrors.add(message(code: 'default.bad.'+ it.getArguments()[0] + '.message'))
-			}
-			flash.message = listOfErrors
 			render(view: "edit", model: [book: book, authors: Author.findAll()])
 			return
 		}

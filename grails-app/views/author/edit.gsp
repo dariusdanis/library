@@ -28,7 +28,7 @@
 .bsmSelect {
 	position: absolute;
 	width: 222px;
-    left: 256px;
+	left: 256px;
 	top: 103px;
 }
 </style>
@@ -44,26 +44,34 @@
 			</ul>
 		</div>
 		<g:if test="${flash.message}">
-			<g:each in="${flash.message}">
-				<div class="message">
-					${it}
-				</div>
-			</g:each>
-			${flash.clear()}
+			<div class="message">
+				${flash.message}
+			</div>
 		</g:if>
+		<g:hasErrors bean="${book}">
+			<ul class="errors" role="alert">
+				<g:eachError bean="${book}" var="error">
+					<li
+						<g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message
+							error="${error}" /></li>
+				</g:eachError>
+			</ul>
+		</g:hasErrors>
 		<div class="info">
 			<h1>Author</h1>
 
 			<g:form action="update" method="post">
 				<fieldset class="form">
-					<div class="fieldcontain">
-						<label> Name: </label> <input type="text" id="name" name="name"
-							value="${author.name }" />
+					<div class="fieldcontain ${hasErrors(bean: book, field: 'name', 'error')}">
+						<label> Name: </label>
+						<g:textField id="name" name="name" required=""
+							value="${author?.name}" />
 					</div>
 
-					<div class="fieldcontain">
-						<label> Surname: </label> <input type="text" id="surname"
-							name="surname" value="${author.surname }" />
+					<div class="fieldcontain ${hasErrors(bean: book, field: 'surname', 'error')}">
+						<label> Surname: </label>
+						<g:textField id="surname" name="surname" required=""
+							value="${author?.surname }" />
 					</div>
 					<div class="fieldcontain">
 						<label> Books: </label> <select id="books" multiple="multiple"
