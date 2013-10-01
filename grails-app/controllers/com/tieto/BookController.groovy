@@ -19,12 +19,11 @@ class BookController {
 				result.user = session.user
 				result.save()
 			}
-			flash.message = "Books taken successfully"
+			flash.message = "The books was taken successfully!"
 			redirect(controller: "user", action: "mybooks")
-		} else {
-			flash.message = "First select books!"
-			redirect(action: "list")
-		}
+			return;
+		} 
+		redirect(action: "list")
 	}
 
 	def listall() {
@@ -38,14 +37,14 @@ class BookController {
 			render(view:"add", model : [book : book, authors : Author.findAll()])
 			return;
 		}
-		flash.message="Book added successfully"
+		flash.message="The book was successfully added!"
 		redirect(action: "show", id: book.id);
 	}
 
 	def show(Long id) {
 		def book = Book.get(id)
 		if (!book) {
-			flash.message = "Book dosn't exist!"
+			flash.message = "This book doesn't exist!"
 			redirect(action: "list")
 			return
 		}
@@ -55,7 +54,7 @@ class BookController {
 	def edit(Long id) {
 		def book = Book.get(id)
 		if (!book) {
-			flash.message = "Book dosn't exist!"
+			flash.message = "This book doesn't exist!"
 			redirect(action: "list")
 			return
 		}
@@ -65,7 +64,7 @@ class BookController {
 	def update(Long id, Long version) {
 		def book = Book.get(id)
 		if (!book) {
-			flash.message = "Book dosn't exist!"
+			flash.message = "This book doesn't exist!"
 			redirect(action: "list")
 			return
 		}
@@ -82,23 +81,23 @@ class BookController {
 			render(view: "edit", model: [book: book, authors: Author.findAll()])
 			return
 		}
-		flash.message = "Book " + book.name + " was updated successfully"
+		flash.message = "Book ${book.name} was successfully updated!"
 		redirect(action: "show", id: book.id)
 	}
 
 	def delete(Long id) {
 		def book = Book.get(id)
 		if (!book) {
-			flash.message = "Book dosn't exist!"
+			flash.message = "This book doesn't exist!"
 			redirect(action: "list")
 			return
 		}
 		try {
 			book.delete(flush: true)
-			flash.message = "Book successfully deleted"
+			flash.message = "The book was successfully deleted!"
 			redirect(action: "list")
 		} catch (DataIntegrityViolationException e) {
-			flash.message = "Book could not be deleted"
+			flash.message = "The book couldn't  be deleted!"
 			redirect(action: "show", id: id)
 		}
 	}

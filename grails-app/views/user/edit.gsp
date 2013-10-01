@@ -47,12 +47,14 @@
 			<h1>Edit</h1>
 
 			<g:if test="${flash.message}">
-					<div class="message">
-						  ${flash.message}
-					</div>
+				<div class="message">
+					${
+						flash.message
+					}
+				</div>
 				${flash.clear()}
 			</g:if>
-			
+
 			<g:hasErrors bean="${user}">
 				<ul class="errors" role="alert">
 					<g:eachError bean="${user}" var="error">
@@ -65,19 +67,21 @@
 
 			<g:form action="update" method="post">
 				<fieldset class="form">
-					<g:render template="form"/>
+					<g:render template="form" />
 					<div class="fieldcontain">
 						<label> Books: </label> <select id="books" multiple="multiple"
 							title="Click to Select Book" name="checkedBooks">
-							<g:each in="${availableBooks}">
-								<option value="${it.id}">
-									${it}
-								</option>
-							</g:each>
-							<g:each in="${userBooks}">
-								<option selected="selected" value="${it.id}">
-									${it}
-								</option>
+							<g:each in="${books}">
+								<g:if test="${user.books.contains(it)}">
+									<option selected="selected" value="${it.id}">
+										${it}
+									</option>
+								</g:if>
+								<g:else>
+									<option value="${it.id}">
+										${it}
+									</option>
+								</g:else>
 							</g:each>
 
 						</select>

@@ -5,7 +5,6 @@ import java.lang.ClassLoader.ParallelLoaders;
 
 import grails.converters.JSON;
 
-import org.json.simple.JSONArray;
 import org.springframework.dao.DataIntegrityViolationException
 import org.apache.commons.validator.EmailValidator
 
@@ -53,8 +52,7 @@ class UserController {
 	}
 
 	def mybooks() {
-		def books = Book.findAllWhere(user: session.user)
-		[books: books]
+		[books: Book.findAllWhere(user: session.user)]
 	}
 
 	def giveBack() {
@@ -70,7 +68,7 @@ class UserController {
 	def show(Long id) {
 		def user = User.get(id)
 		if (!user) {
-			flash.message = "User dosn't exist!"
+			flash.message = "This user doesn't exist!"
 			redirect(action: "list")
 			return
 		}
@@ -80,24 +78,24 @@ class UserController {
 	def edit(Long id) {
 		def user = User.get(id)
 		if (!user) {
-			flash.message = "User dosn't exist!"
+			flash.message = "This user doesn't exist!"
 			redirect(action: "list")
 			return
 		}
-		[user: user, availableBooks : Book.findAllWhere(user : null), userBooks : Book.findAllWhere(user : user)]
+		[user: user, books : Book.findAll()]
 	}
 
 	def update(Long id, Long version){
 		def user = User.get(id)
 		if (!user) {
-			flash.message = "User dosn't exist!"
+			flash.message = "This user doesn't exist!"
 			redirect(action: "list")
 			return
 		}
 		if (version != null) {
 			if (user.version > version) {
 				flash.message = message(code: 'default.user.optimistic.locking.failure')
-				render(view: "edit", model: [user: user, availableBooks : Book.findAllWhere(user : null), userBooks : Book.findAllWhere(user : user)])
+				render(view: "edit", model: [user: user, books : Book.findAll()])
 				return
 			}
 		}
@@ -107,18 +105,18 @@ class UserController {
 		Book.getAll(params.list('checkedBooks')).each { it.user = user }
 
 		if (!user.save(flush: true)) {
-			render(view: "edit", model: [user: user, availableBooks : Book.findAllWhere(user : null), userBooks : Book.findAllWhere(user : user)])
+			render(view: "edit", model: [user: user, books : Book.findAll()])
 			return
 		}
 
-		flash.message = "User " + user.name + " was updated successfully"
+		flash.message = "User ${user} was successfully updated!"
 		redirect(action: "show", id: user.id)
 	}
 
 	def delete(Long id) {
 		def user = User.get(id)
 		if (!user) {
-			flash.message = "User dosn't exist!"
+			flash.message = "This doesn't exist!"
 			redirect(action: "list")
 			return
 		}
@@ -126,32 +124,31 @@ class UserController {
 			user.books.each {it.user = null}
 
 			user.delete(flush: true)
-			if (user.equals(session.user)) {
+			if (id.equals(session.user.id)) {
 				logout()
 				return;
 			}
 
-			flash.message = "User successfully deleted"
+			flash.message = "The user was successfully deleted!"
 			redirect(action: "list")
 		} catch (DataIntegrityViolationException e) {
-			flash.message = "User could not be deleted"
+			flash.message = "The user couldn't be deleted!"
 			redirect(action: "show", id: id)
 		}
 	}
 
 	def userJson = {
-		def user = User.findAll("from User as u where u.books.size > 1")
 		JSON.registerObjectMarshaller(User) {
-			def array = [:]
-			array['id'] = it.id
-			array['email'] = it.email
-			array['name'] = it.name
-			array['surname'] = it.surname
-			array['dateOfBirth'] = it.dateOfBirth.format('yyyy-MM-dd')
-			array['personalNo'] = it.personalNo
-			return array
+			return [
+				id : it.id,
+				email : it.email,
+				name : it.name,
+				surname : it.surname,
+				dateOfBirth : it.dateOfBirth.format('yyyy-MM-dd'),
+				personalNo : it.personalNo
+			]
 		}
-		def listResult = [items: user]
+		def listResult = [items: User.findAll("from User as u where u.books.size > 1")]
 		render listResult as JSON
 	}
 
@@ -161,15 +158,14 @@ class UserController {
 			return
 		}
 		JSON.registerObjectMarshaller(Book) {
-			def array = [:]
-			array['name'] = it.name
-			array['ISBN'] = it.ISBN
-			array['yearOfRelease'] = it.yearOfRelease.format('yyyy-MM-dd')
-			array['id'] = it.id
-			return array
+			return [
+				name : it.name,
+				ISBN : it.ISBN,
+				yearOfRelease : it.yearOfRelease.format('yyyy-MM-dd'),
+				id : it.id
+			]
 		}
-		def books = Book.findAllWhere(user: user)
-		def listResult = [items: books]
+		def listResult = [items: Book.findAllWhere(user: user)]
 		render listResult as JSON
 	}
 }

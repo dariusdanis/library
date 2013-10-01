@@ -52,21 +52,11 @@
 				</ul>
 			</g:hasErrors>
 			<g:form action="save" method="post">
+
 				<fieldset class="form">
-					<div class="fieldcontain ${hasErrors(bean: author, field: 'name', 'error')}">
-						<label> Name: </label>
-						<g:textField id="name" name="name" required=""
-							value="${author?.name}" />
-					</div>
-
-					<div class="fieldcontain ${hasErrors(bean: author, field: 'surname', 'error')}">
-						<label> Surname: </label>
-						<g:textField id="surname" name="surname" required=""
-							value="${author?.surname }" />
-					</div>
-
+					<g:render template="form" />
 					<div class="fieldcontain">
-						<label> Authors: </label> <select id="books" multiple="multiple"
+						<label> Books: </label> <select id="books" multiple="multiple"
 							title="Click to Select Book" name="checkedBooks">
 							<g:each in="${books}">
 								<option value="${it.id}">

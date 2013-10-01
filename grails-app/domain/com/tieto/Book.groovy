@@ -20,21 +20,7 @@ class Book {
 	}
 
 	String toString(){
-		name
+		"${name}"
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (obj instanceof Book) {
-			if (((Book)obj).id == id) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	@Override
-	public int hashCode() {
-		return id;
-	}
 }

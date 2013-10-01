@@ -28,7 +28,7 @@ class BootStrap {
 			author3.save()
 
 			def user = new User(
-					dateOfBirth: new GregorianCalendar( 1800, Calendar.JUNE, 1 ).time,
+					dateOfBirth: new GregorianCalendar( 1990, Calendar.JUNE, 1 ).time,
 					email: "jonas@gmail.com",
 					name: "Jonas",
 					password: "jonas",
@@ -50,7 +50,7 @@ class BootStrap {
 
 			def user3 = new User(
 					role: "admin",
-					dateOfBirth: new GregorianCalendar( 1785, Calendar.JANUARY, 1 ).time,
+					dateOfBirth: new GregorianCalendar( 2013, Calendar.SEPTEMBER, 1 ).time,
 					email: "admin@admin.com",
 					name: "Admin",
 					password: "admin",

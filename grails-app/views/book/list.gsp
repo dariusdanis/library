@@ -59,7 +59,7 @@
 			</table>
 			<g:if test="${ session?.user != null && !"Owner".equals(action)}">
 				<fieldset class="buttons">
-					<input type="submit" value="Take books" />
+					<input type="submit" value="Take" />
 				</fieldset>
 			</g:if>
 		</g:form>

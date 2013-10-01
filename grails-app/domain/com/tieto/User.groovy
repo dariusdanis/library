@@ -6,7 +6,7 @@ class User {
 
 	static hasMany = [books: Book]
 	static transients = ['admin']
-	
+
 	String email
 	String name
 	String surname
@@ -25,27 +25,16 @@ class User {
 			return (it.isNumber()) && (it.length() == 11)
 		})
 	}
-	
-	static mapping = {
-		books cascade: 'none'
-	}
-	
+
+	static mapping = { books cascade: 'none' }
+
 	boolean isAdmin(){
 		return role == "admin"
 	}
-	
+
 	@Override
-	public boolean equals(Object obj) {
-		if (obj instanceof User) {
-			if (((User)obj).id == id) {
-				return true;
-			}
-		}
-		return false;
+	String toString(){
+		"${name} ${surname}"
 	}
 	
-	@Override
-	public int hashCode() {
-		return id;
-	}
 }

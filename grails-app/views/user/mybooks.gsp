@@ -18,7 +18,7 @@
 					<tr>
 						<th>Title</th>
 						<th>Release year</th>
-						<th>Give back</th>
+						<th>Return</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -37,7 +37,7 @@
 				</tbody>
 			</table>
 			<fieldset class="buttons">
-				<input type="submit" value="Give back books!" />
+				<input type="submit" value="Return books!" />
 			</fieldset>
 		</g:form>
 	</div>

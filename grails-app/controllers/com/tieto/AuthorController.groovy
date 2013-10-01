@@ -21,14 +21,14 @@ class AuthorController {
 			render(view:"add", model : [author : author, books : Book.findAll()])
 			return;
 		}
-		flash.message="Author added successfully"
+		flash.message="The author was successfully added!"
 		redirect(action: "show", id: author.id);
 	}
 
 	def show(Long id) {
 		def author = Author.get(id)
 		if (!author) {
-			flash.message = "Author dosn't exist!"
+			flash.message = "This author doesn't exist!"
 			redirect(action: "list")
 			return
 		}
@@ -38,7 +38,7 @@ class AuthorController {
 	def edit(Long id) {
 		def author = Author.get(id)
 		if (!author) {
-			flash.message = "Author dosn't exist!"
+			flash.message = "This author doesn't exist!"
 			redirect(action: "list")
 			return
 		}
@@ -49,7 +49,7 @@ class AuthorController {
 		def listOfErrors = new ArrayList();
 		def author = Author.get(id)
 		if (!author) {
-			flash.message = "Author dosn't exist!"
+			flash.message = "This author doesn't exist!"
 			redirect(action: "list")
 			return
 		}
@@ -71,14 +71,14 @@ class AuthorController {
 			render(view: "edit", model: [author: author])
 			return
 		}
-		flash.message = "Author " + author.name + " " + author.surname + " was updated successfully"
+		flash.message = "The author ${author.name} ${author.surname} was successfully updated!"
 		redirect(action: "show", id: author.id)
 	}
 
 	def delete(Long id) {
 		def author = Author.get(id)
 		if (!author) {
-			flash.message = "Book dosn't exist!"
+			flash.message = "This author doesn't exist!"
 			redirect(action: "list")
 			return
 		}
@@ -88,10 +88,10 @@ class AuthorController {
 			}
 			author.books.clear()
 			author.delete(flush: true)
-			flash.message = "Author successfully deleted"
+			flash.message = "The author was successfully deleted!"
 			redirect(action: "list")
 		} catch (DataIntegrityViolationException e) {
-			flash.message = "Book could not be deleted"
+			flash.message = "The author couldn't be deleted!"
 			redirect(action: "show", id: id)
 		}
 	}

@@ -1,6 +1,6 @@
 Ext.onReady(function() {
 
-	var encode = false;
+	var encode = true;
 	var local = true;
 
 	var bookInfo = new Ext.data.Store({
@@ -22,7 +22,7 @@ Ext.onReady(function() {
 	var userInfo = new Ext.data.JsonStore({
 		autoLoad : true,
 		autoDestroy : true,
-		url : window.location.origin + '/library/user/userJson',
+		url : '/library/user/userJson',
 		idProperty : 'id',
 		root : 'items',
 		fields : [ {
@@ -34,7 +34,9 @@ Ext.onReady(function() {
 		}, {
 			name : 'id'
 		}, {
-			name : 'dateOfBirth'
+			name : 'dateOfBirth',
+			type : 'date',
+			dateFormat : 'Y-m-d'
 		}, {
 			name : 'personalNo'
 		} ]
@@ -68,6 +70,11 @@ Ext.onReady(function() {
 				dataIndex : 'yearOfRelease'
 			} ]
 		} ],
+		listeners : {
+			hide : function() {
+				grid.getSelectionModel().clearSelections()
+			}
+		}
 	});
 
 	var cm = new Ext.grid.ColumnModel([ {
@@ -90,6 +97,7 @@ Ext.onReady(function() {
 		header : "Birth date",
 		width : 100,
 		dataIndex : 'dateOfBirth',
+		renderer : Ext.util.Format.dateRenderer('Y-m-d')
 	}, {
 		header : "Personal No.",
 		width : 100,
@@ -139,12 +147,12 @@ Ext.onReady(function() {
 	}
 
 	var grid = new Ext.grid.GridPanel({
-		border: false,
+		border : false,
 		frame : true,
 		title : 'Users',
 		height : 215,
 		width : 670,
-		loadMask: true,
+		loadMask : true,
 		store : userInfo,
 		cm : cm,
 		plugins : [ filters ],
@@ -154,18 +162,17 @@ Ext.onReady(function() {
 				rowselect : {
 					fn : function(sm, index, record) {
 						bookInfo.proxy.setApi(Ext.data.Api.actions.read,
-								 window.location.origin + '/library/user/bookJson/'
-										+ record.data.id);
+								'/library/user/bookJson/' + record.data.id);
 						bookInfo.load();
 						win.show(this);
 					}
 				}
 			}
 		}),
-		listeners: {
-		    rowcontextmenu: function(grid, index, event) {
-		         showMenu(grid, index, event);
-		    }
+		listeners : {
+			rowcontextmenu : function(grid, index, event) {
+				showMenu(grid, index, event);
+			}
 		}
 	});
 	grid.render('grid');

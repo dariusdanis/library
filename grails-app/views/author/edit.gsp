@@ -35,7 +35,6 @@
 </head>
 <body>
 	<div class="content">
-
 		<div class="nav" role="navigation">
 			<ul>
 				<li><g:link action="list">
@@ -62,8 +61,8 @@
 
 			<g:form action="update" method="post">
 				<fieldset class="form">
+					<g:render template="form" />
 					<div class="fieldcontain">
-						<g:render template="form" />
 						<label> Books: </label> <select id="books" multiple="multiple"
 							title="Click to Select Book" name="checkedBooks">
 							<g:each in="${books}">
